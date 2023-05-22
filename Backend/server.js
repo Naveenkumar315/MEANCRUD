@@ -6,7 +6,7 @@ const { connectToDb } = require('./db/db')
 const server = express();
 const port = process.env.PORT || 5000;
 
-console.log('********************'+process.env.PORT2)
+console.log('********************'+process.env.PORT)
 console.log('********************'+process.env.ORIGIN)
 
 connectToDb().then(()=>{
