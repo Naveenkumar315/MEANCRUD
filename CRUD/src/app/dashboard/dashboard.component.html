@@ -1,0 +1,94 @@
+<div class="row">
+      <div class="col-md-12 text-center" style="margin: 1%;">
+          <h2>Add Student</h2>
+      </div>
+  
+      <div class="row col-md-12">
+          <form class="form col-md-12" style="">
+              <div class="row form-row row-gap">
+                  <div class="col-md-2"></div>
+                  <div class="col-md-4">First Name</div>
+                  <div class="col-md-4">
+                      <input type="text" [formControl]="studentForm.controls.firstName" name="" class="form-control">
+                  </div>
+                  <div class="col-md-2"></div>
+              </div>
+              <div class="row form-row row-gap">
+                  <div class="col-md-2"></div>
+                  <div class="col-md-4">Last Name</div>
+                  <div class="col-md-4">
+                      <input type="text" [formControl]="studentForm.controls.lastName" name="" class="form-control">
+                  </div>
+                  <div class="col-md-2"></div>
+              </div>
+              <div class="row form-row row-gap">
+                  <div class="col-md-2"></div>
+                  <div class="col-md-4">Phone</div>
+                  <div class="col-md-4">
+                      <input type="number" (input)="limitDigits($event,10)" [formControl]="studentForm.controls.phoneNo" name=""  class="form-control">
+                  </div>
+                  <div class="col-md-2"></div>
+              </div>
+              <div class="row form-row row-gap">
+                  <div class="col-md-2"></div>
+                  <div class="col-md-4">Age</div>
+                  <div class="col-md-4">
+                      <input type="number" (input)="limitDigits($event,3)" [formControl]="studentForm.controls.age" name=""  class="form-control">
+                  </div>
+                  <div class="col-md-2"></div>
+              </div>
+              <div class="row form-row row-gap">
+                  <div class="col-md-2"></div>
+                  <div class="col-md-8">
+                      <!-- <button type="button" mat-raised-button color="warn" >Add Student</button> -->
+                      <button type="button" mat-flat-button class="buttonAdd" color="primary" style="border: none;outline: none;background: cadetblue;cursor: pointer;" (click)="createStudent($event)">Add Student</button>
+                      <!-- <button type="button" (click)="createStudent($event)" class="btn body-cell" style="cursor: pointer;">Add Student</button> -->
+                      <!-- <button type="button" (click)="createStudent($event)" class="btn btn-success">Update Student</button> -->
+                  </div>
+                  <div class="col-md-2"></div>
+              </div>
+          </form>
+      </div>
+      <br><br>
+      <div class="row col-md-12 text-center">
+          <h4 class="card-title">Student Details</h4>
+          <table mat-table [dataSource]="studentData" class="mat-elevation-z8">
+            <ng-container matColumnDef="firstName">
+              <th mat-header-cell *matHeaderCellDef class="header-cell">First Name</th>
+              <td class="body-cell" mat-cell *matCellDef="let student">{{ student.firstName }}</td>
+            </ng-container>
+          
+            <ng-container matColumnDef="lastName">
+              <th mat-header-cell *matHeaderCellDef class="header-cell">Last Name</th>
+              <td class="body-cell" mat-cell *matCellDef="let student">{{ student.lastName }}</td>
+            </ng-container>
+          
+            <ng-container matColumnDef="phone">
+              <th mat-header-cell *matHeaderCellDef class="header-cell">Phone</th>
+              <td class="body-cell" mat-cell *matCellDef="let student">{{ student.phoneNo }}</td>
+            </ng-container>
+          
+            <ng-container matColumnDef="age">
+              <th mat-header-cell *matHeaderCellDef class="header-cell">Age</th>
+              <td class="body-cell" mat-cell *matCellDef="let student">{{ student.age }}</td>
+            </ng-container>
+          
+            <ng-container matColumnDef="actions">
+              <th mat-header-cell *matHeaderCellDef class="header-cell">Operations</th>
+              <td class="body-cell" mat-cell *matCellDef="let student">
+                <button mat-icon-button color="warn" (click)="deleteStudent(student._id)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+                <button mat-icon-button color="primary" (click)="updateStudent(student)">
+                  <mat-icon>edit</mat-icon>
+                </button>
+              </td>
+            </ng-container>
+          
+            <tr mat-header-row *matHeaderRowDef="['firstName', 'lastName', 'phone', 'age', 'actions']"></tr>
+            <tr mat-row *matRowDef="let student; columns: ['firstName', 'lastName', 'phone', 'age', 'actions']"></tr>
+          </table>
+          
+          
+      </div>
+  </div>
