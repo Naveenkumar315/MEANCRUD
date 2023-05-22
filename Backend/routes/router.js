@@ -3,32 +3,29 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const { ObjectId } = require("mongodb");
 
+const studentCollection = mongoose.connection.collection("students");
+
 router.post("/create", (req, res) => {
-  let db = mongoose.connection.db;
-  let collection = "students";
-  db.collection(collection).insertOne(
-    {
-      firstName: req.body.firstName,
-      lastName: req.body.lastName,
-      age: req.body.age,
-      phoneNo: req.body.phoneNo, // Corrected line
-    },
-    function (err, result) {
-      if (err) {
-        res.send("0");
-      } else {
-        res.send("1");
-      }
-    }
-  );
-  res.send("1");
-  console.log("**************" + JSON.stringify(req.body.firstName));
+  const { firstName, lastName, age, phoneNo } = req.body;
+
+  studentCollection
+    .insertOne({
+      firstName,
+      lastName,
+      age,
+      phoneNo,
+    })
+    .then(() => {
+      res.send("1");
+    })
+    .catch((err) => {
+      console.log(err);
+      res.send("0");
+    });
 });
 
 router.get("/get", (req, res) => {
-  let db = mongoose.connection.db;
-  let collection = "students";
-  db.collection(collection)
+  studentCollection
     .find({})
     .toArray()
     .then((students) => {
@@ -41,41 +38,36 @@ router.get("/get", (req, res) => {
 });
 
 router.put("/put", (req, res) => {
-  let db = mongoose.connection.db;
-  let collection = "students";
-  console.log("IIIIIIIIIIIIIIIII" + req.body._id);
-  db.collection(collection)
+  const { _id, firstName, lastName, age, phoneNo } = req.body;
+
+  studentCollection
     .updateOne(
-      { _id: new ObjectId(req.body._id) },
+      { _id: ObjectId(_id) },
       {
         $set: {
-          firstName: req.body.firstName,
-          lastName: req.body.lastName,
-          age: req.body.age,
-          phoneNo: req.body.phoneNo,
+          firstName,
+          lastName,
+          age,
+          phoneNo,
         },
       }
     )
-    .then((result) => {
-      console.log("updated success" + JSON.stringify(result));
-      res.send('2'); // Send the updated result as response
+    .then(() => {
+      res.send("2");
     })
     .catch((err) => {
-      console.log("update err" + err);
-      res.send("0"); // Send '0' as response to indicate an error
+      console.log(err);
+      res.send("0");
     });
 });
 
 router.delete("/delete/:id", (req, res) => {
-  let db = mongoose.connection.db;
-  let collection = "students";
-  let id = req.params.id;
-  console.log("IIIIIIIIIIIIIIIII " + id);
-  db.collection(collection)
-    .deleteOne({ _id: new ObjectId(id) }) // Corrected line
-    .then((student) => {
-      console.log(JSON.stringify(student));
-      res.send('1');
+  const id = req.params.id;
+
+  studentCollection
+    .deleteOne({ _id: ObjectId(id) })
+    .then(() => {
+      res.send("1");
     })
     .catch((err) => {
       console.log(err);
