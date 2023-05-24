@@ -42,7 +42,7 @@ router.put("/put", (req, res) => {
 
   studentCollection
     .updateOne(
-      { _id: ObjectId(_id) },
+      { _id: new ObjectId(_id) },
       {
         $set: {
           firstName,
@@ -65,7 +65,7 @@ router.delete("/delete/:id", (req, res) => {
   const id = req.params.id;
 
   studentCollection
-    .deleteOne({ _id: ObjectId(id) })
+    .deleteOne({ _id: new ObjectId(id) })
     .then(() => {
       res.send("1");
     })

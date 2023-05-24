@@ -5,7 +5,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root',
 })
 export class StudentService {
-  private baseUrl: string = 'http://localhost:5000';
+  private baseUrl: string = 'https://mean-v915.onrender.com';
   private headers = new HttpHeaders().set('Content-Type', 'application/json');
 
   constructor(private http: HttpClient) {}
