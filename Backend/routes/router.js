@@ -25,14 +25,14 @@ router.post("/create", (req, res) => {
 });
 
 router.get("/get", (req, res) => {
-  studentCollection.find({})
-    .then((students) => {
-      res.status(200).json({ students });
-    })
-    .catch((err) => {
-      console.log(err);
-      res.status(500).json({ errmsg: 'Error: ' + err });
-    });
+  studentCollection.find({}, null, { timeout: 30000 }) // Increase timeout to 30 seconds
+  .then((students) => {
+    res.status(200).json({ students });
+  })
+  .catch((err) => {
+    console.log(err);
+    res.status(500).json({ errmsg: 'Error: ' + err });
+  });
 });
 
 router.put("/put", (req, res) => {
