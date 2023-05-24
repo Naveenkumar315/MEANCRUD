@@ -25,12 +25,12 @@ router.post("/create", (req, res) => {
 });
 
 router.get("/get", (req, res) => {
-  studentCollection.find({}, null, { timeout: 30000 }) // Increase timeout to 30 seconds
+  studentCollection.find({}, null, { timeout: 1000 }).toArray({}) // Increase timeout to 30 seconds
   .then((students) => {
     res.status(200).json({ students });
   })
   .catch((err) => {
-    console.log(err);
+    console.log('***********Get Error' +err);
     res.status(500).json({ errmsg: 'Error: ' + err });
   });
 });
