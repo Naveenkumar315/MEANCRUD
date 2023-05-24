@@ -26,15 +26,15 @@ router.post("/create", (req, res) => {
 
 router.get("/get", (req, res) => {
   studentCollection
-  .find({})
-  .toArray()
-  .then((students) => {
-    res.status(200).json({ students });
-  })
-  .catch((err) => {
-    console.log(err);
-    res.status(500).json({ errmsg: 'Error: ' + err });
-  });
+    .find({})
+    .toArray()
+    .then((students) => {
+      res.status(200).json({ students });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).json({ errmsg: 'Error: ' + err });
+    });
 });
 
 router.put("/put", (req, res) => {
